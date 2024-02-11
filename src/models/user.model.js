@@ -53,7 +53,7 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre("save", async function(next){
     if(!this.isModified("password")) return next(); // If password is not modified then call next
-    this.password = bcrypt.hash(this.password, 10); // If password is modified then generate new hashed password
+    this.password = await bcrypt.hash(this.password, 10); // If password is modified then generate new hashed password
     next();
 });
 
