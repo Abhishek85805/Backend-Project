@@ -83,9 +83,10 @@ const registerUser = asyncHandler(async(req, res) => {
 const loginUser = asyncHandler(async(req, res) => {
     //req.body -> data
     const {email, username, password} = req.body;
+    console.log(email)
 
     //username or email
-    if(!username || !email){
+    if(!username && !email){
         throw new ApiError(400, "Username or email is required");
     }
 
@@ -128,7 +129,7 @@ const loginUser = asyncHandler(async(req, res) => {
     )
 })
 
-const logoutUser = asyncHandler(async(req, res) => {
+const logoutUser = asyncHandler(async(req, res) => {    
     User.findByIdAndUpdate(
         req.user._id,
         {
@@ -153,4 +154,4 @@ const logoutUser = asyncHandler(async(req, res) => {
     .json(new ApiResponse(200, {}, "User logged out"));
 })
 
-export {registerUser};
+export {registerUser, loginUser, logoutUser};
