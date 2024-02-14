@@ -7,8 +7,8 @@ import {ApiResponse} from "../utils/ApiResponse.js";
 const generateAccessAndRefreshTokens = async(userId) => {
     try {
         const user = await User.findById(userId);
-        const accessToken = user.generateAccessToken;
-        const refreshToken = user.generateRefreshToken;
+        const accessToken = user.generateAccessToken();
+        const refreshToken = user.generateRefreshToken();
 
         user.refreshToken = refreshToken;
         await user.save({validateBeforeSave: false});
@@ -148,7 +148,7 @@ const logoutUser = asyncHandler(async(req, res) => {
     }
     
     return res
-    .statu(200)
+    .status(200)
     .clearCookie("accessToken", options)
     .clearCookie("refreshToken", options)
     .json(new ApiResponse(200, {}, "User logged out"));
